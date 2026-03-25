@@ -1,0 +1,32 @@
+# binaries
+/bin/
+/build/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+# go build files
+*.test
+*.out
+# go modules
+go.work
+go.work.sum
+# environment variables
+.env
+.env.*
+!.env.example
+# logs
+*.log
+# OS Files
+.DS_Store
+Thumbs.db
+# IDE Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+# temporaryfiles
+tmp/
+temp/
