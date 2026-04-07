@@ -13,6 +13,7 @@ import (
 
 type User struct {
 	ID             uuid.UUID
+	Username       string
 	Email          string
 	Bio            sql.NullString
 	HashedPassword string

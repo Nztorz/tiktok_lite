@@ -7,27 +7,38 @@ package database
 
 import (
 	"context"
+	"database/sql"
 )
 
 const createUser = `-- name: CreateUser :one
-INSERT INTO users(email, hashed_password)
+INSERT INTO users(email, username, hashed_password, bio)
 VALUES (
     $1,
-    $2
+    $2,
+    $3,
+    $4
 )
-RETURNING id, email, bio, hashed_password, created_at, updated_at
+RETURNING id, username, email, bio, hashed_password, created_at, updated_at
 `
 
 type CreateUserParams struct {
 	Email          string
+	Username       string
 	HashedPassword string
+	Bio            sql.NullString
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
-	row := q.db.QueryRowContext(ctx, createUser, arg.Email, arg.HashedPassword)
+	row := q.db.QueryRowContext(ctx, createUser,
+		arg.Email,
+		arg.Username,
+		arg.HashedPassword,
+		arg.Bio,
+	)
 	var i User
 	err := row.Scan(
 		&i.ID,
+		&i.Username,
 		&i.Email,
 		&i.Bio,
 		&i.HashedPassword,
